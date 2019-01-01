@@ -1,0 +1,1 @@
+include LICENSE README.md ac_python_devel.m4 *.py openfst_python/*.py

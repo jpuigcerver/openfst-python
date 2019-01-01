@@ -1,0 +1,43 @@
+dist: xenial
+sudo: true
+
+language: python
+
+os:
+  - linux
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
+
+python:
+  - 2.7
+  - 3.5
+  - 3.6
+  - 3.7
+
+env:
+  global:
+    - CC=gcc-4.9 CXX=g++-4.9
+
+before_install:
+  - sudo apt-get install -y zlib1g-dev
+  - sudo apt-get install -y patchelf
+  - python -m pip install -U pip
+  - python -m pip install --progress-bar off requests
+
+before_script:
+  - python setup.py install
+
+script:
+  - cd /tmp
+  - python -m unittest openfst_python.test
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
