@@ -45,7 +45,11 @@ class OpenFstExtension(Extension):
 class OpenFstBuild(build):
 
     user_options = build.user_options + [
-        ("download-dir=", None, "directory containing the openfst-%s.tar.gz file" % OPENFST_VERSION),
+        (
+            "download-dir=",
+            None,
+            "directory containing the openfst-%s.tar.gz file" % OPENFST_VERSION,
+        )
     ]
 
     @property
@@ -58,10 +62,12 @@ class OpenFstBuild(build):
 
     def finalize_options(self):
         build.finalize_options(self)
-        #self.set_undefined_options("build_ext", ("download_dir", "download_dir"))
+        # self.set_undefined_options("build_ext", ("download_dir", "download_dir"))
         if self.download_dir:
             openfst_tar_gz = os.path.join(self.download_dir, self.openfst_basename)
-            assert os.path.isfile(openfst_tar_gz), 'File %s does not exist' % openfst_tar_gz
+            assert os.path.isfile(openfst_tar_gz), (
+                "File %s does not exist" % openfst_tar_gz
+            )
         else:
             self.download_dir = self.build_temp
 
@@ -69,7 +75,11 @@ class OpenFstBuild(build):
 class OpenFstBuildExt(build_ext):
 
     user_options = build_ext.user_options + [
-        ("download-dir=", None, "directory containing the openfst-%s.tar.gz file" % OPENFST_VERSION),
+        (
+            "download-dir=",
+            None,
+            "directory containing the openfst-%s.tar.gz file" % OPENFST_VERSION,
+        )
     ]
 
     @property
@@ -106,14 +116,13 @@ class OpenFstBuildExt(build_ext):
     def output_dir(self):
         return "%s/openfst_python" % self.build_lib
 
-
     def initialize_options(self):
         build_ext.initialize_options(self)
         self.download_dir = None
 
     def finalize_options(self):
         build_ext.finalize_options(self)
-        self.set_undefined_options('build', ("download_dir", "download_dir"))
+        self.set_undefined_options("build", ("download_dir", "download_dir"))
 
     def openfst_download(self):
         if os.path.exists(self.openfst_dirname):
