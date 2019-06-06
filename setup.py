@@ -8,11 +8,12 @@ import shutil
 import subprocess
 import sys
 
+from distutils.command.build import build
 from setuptools import setup, find_packages, Extension
 from setuptools.command.build_ext import build_ext
 
 
-OPENFST_VERSION = "1.6.9"
+OPENFST_VERSION = "1.7.2"
 
 
 def copy(src, dst):
@@ -41,7 +42,36 @@ class OpenFstExtension(Extension):
         Extension.__init__(self, name="openfst_python.pywrapfst", sources=[])
 
 
-class OpenFstBuild(build_ext):
+class OpenFstBuild(build):
+
+    user_options = build.user_options + [
+        ("download-dir=", None, "directory containing the openfst-%s.tar.gz file" % OPENFST_VERSION),
+    ]
+
+    @property
+    def openfst_basename(self):
+        return "openfst-%s.tar.gz" % OPENFST_VERSION
+
+    def initialize_options(self):
+        build.initialize_options(self)
+        self.download_dir = None
+
+    def finalize_options(self):
+        build.finalize_options(self)
+        #self.set_undefined_options("build_ext", ("download_dir", "download_dir"))
+        if self.download_dir:
+            openfst_tar_gz = os.path.join(self.download_dir, self.openfst_basename)
+            assert os.path.isfile(openfst_tar_gz), 'File %s does not exist' % openfst_tar_gz
+        else:
+            self.download_dir = self.build_temp
+
+
+class OpenFstBuildExt(build_ext):
+
+    user_options = build_ext.user_options + [
+        ("download-dir=", None, "directory containing the openfst-%s.tar.gz file" % OPENFST_VERSION),
+    ]
+
     @property
     def openfst_basename(self):
         return "openfst-%s.tar.gz" % OPENFST_VERSION
@@ -52,7 +82,7 @@ class OpenFstBuild(build_ext):
 
     @property
     def openfst_filename(self):
-        return "%s/%s" % (self.build_temp, self.openfst_basename)
+        return os.path.join(self.download_dir, self.openfst_basename)
 
     @property
     def openfst_url(self):
@@ -66,25 +96,37 @@ class OpenFstBuild(build_ext):
     @property
     def openfst_deps_libs(self):
         return [
-            "%s/src/extensions/far/.libs/libfstfar.so.13" % self.openfst_dirname,
-            "%s/src/extensions/far/.libs/libfstfarscript.so.13" % self.openfst_dirname,
-            "%s/src/script/.libs/libfstscript.so.13" % self.openfst_dirname,
-            "%s/src/lib/.libs/libfst.so.13" % self.openfst_dirname,
+            "%s/src/extensions/far/.libs/libfstfar.so.16" % self.openfst_dirname,
+            "%s/src/extensions/far/.libs/libfstfarscript.so.16" % self.openfst_dirname,
+            "%s/src/script/.libs/libfstscript.so.16" % self.openfst_dirname,
+            "%s/src/lib/.libs/libfst.so.16" % self.openfst_dirname,
         ]
 
     @property
     def output_dir(self):
         return "%s/openfst_python" % self.build_lib
 
+
+    def initialize_options(self):
+        build_ext.initialize_options(self)
+        self.download_dir = None
+
+    def finalize_options(self):
+        build_ext.finalize_options(self)
+        self.set_undefined_options('build', ("download_dir", "download_dir"))
+
     def openfst_download(self):
+        if os.path.exists(self.openfst_dirname):
+            return
+
         if not os.path.isdir(self.build_temp):
             os.makedirs(self.build_temp)
 
-        filename = self.openfst_filename
-        if not os.path.isfile(filename):
+        if not os.path.exists(self.openfst_filename):
+            print("downloading from %s" % self.openfst_url)
             r = requests.get(self.openfst_url, verify=False, stream=True)
             r.raw.decode_content = True
-            with open(filename, "wb") as f:
+            with open(self.openfst_filename, "wb") as f:
                 shutil.copyfileobj(r.raw, f)
 
     def openfst_extract(self):
@@ -193,7 +235,7 @@ setup(
     license="MIT",
     packages=find_packages(),
     ext_modules=[OpenFstExtension()],
-    cmdclass=dict(build_ext=OpenFstBuild),
+    cmdclass=dict(build=OpenFstBuild, build_ext=OpenFstBuildExt),
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",

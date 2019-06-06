@@ -10,7 +10,7 @@ OpenFst-Python exposes the official Python API to
 in the Python package, so you don't need to install it separately.
 
 The version number of OpenFst-Python is the same as the OpenFst version
-used. **The current version uses OpenFst 1.6.9.**
+used. **The current version uses OpenFst 1.7.2.**
 
 ## Build Requirements
 
@@ -25,17 +25,26 @@ Essentially, you will need:
 
 ## Installation
 
-If you are installing from sources:
+Most likely, you want to avoid the build process. Then, simply install the
+package from PyPI:
+
+```bash
+pip install openfst-python
+```
+
+Alternatively, if you are installing from sources, you can simply do:
 
 ```bash
 python setup.py install
 ```
 
-Alternatively, if you want to avoid the build process, I recommend to
-install the package from PyPI.
+Notice that this downloads the appropriate version of OpenFst directly from
+the Internet. If you don't have an Internet connection but are already in
+possession of the appropriate tar.gz file, you can use the following command:
 
 ```bash
-pip install openfst-python
+python setup.py build --download-dir=DIRECTORY_CONTAINING_OPENFST_TAR_GZ
+python setup.py install
 ```
 
 ## Documentation
