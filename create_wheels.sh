@@ -31,7 +31,8 @@ for py in cp27-cp27mu cp35-cp35m cp36-cp36m cp37-cp37m; do
   cd /tmp/src;
   export PYTHON=/opt/python/$py/bin/python;
   echo "=== Installing dependencies for $py ===";
-  $PYTHON -m pip install requests;
+  $PYTHON -m pip install -U pip;
+  $PYTHON -m pip install -U requests wheel setuptools;
   echo "=== Building for $py ==="
   $PYTHON setup.py clean;
   $PYTHON setup.py bdist_wheel;
