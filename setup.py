@@ -13,7 +13,7 @@ from setuptools import setup, find_packages, Extension
 from setuptools.command.build_ext import build_ext
 
 
-OPENFST_VERSION = "1.7.2"
+OPENFST_VERSION = "1.7.3"
 
 
 def copy(src, dst):
@@ -106,10 +106,10 @@ class OpenFstBuildExt(build_ext):
     @property
     def openfst_deps_libs(self):
         return [
-            "%s/src/extensions/far/.libs/libfstfar.so.16" % self.openfst_dirname,
-            "%s/src/extensions/far/.libs/libfstfarscript.so.16" % self.openfst_dirname,
-            "%s/src/script/.libs/libfstscript.so.16" % self.openfst_dirname,
-            "%s/src/lib/.libs/libfst.so.16" % self.openfst_dirname,
+            "%s/src/extensions/far/.libs/libfstfar.so.17" % self.openfst_dirname,
+            "%s/src/extensions/far/.libs/libfstfarscript.so.17" % self.openfst_dirname,
+            "%s/src/script/.libs/libfstscript.so.17" % self.openfst_dirname,
+            "%s/src/lib/.libs/libfst.so.17" % self.openfst_dirname,
         ]
 
     @property
