@@ -20,6 +20,10 @@ fi;
 #######################################################
 set -ex;
 
+yum install -y centos-release-scl;
+yum install -y devtoolset-6-gcc*;
+source /opt/rh/devtoolset-6/enable;
+
 # Copy host source directory, to avoid changes in the host.
 cp -r /host/src /tmp/src;
 rm -rf /tmp/src/build /tmp/src/dist;

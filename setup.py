@@ -106,10 +106,10 @@ class OpenFstBuildExt(build_ext):
     @property
     def openfst_deps_libs(self):
         return [
-            "%s/src/extensions/far/.libs/libfstfar.so.17" % self.openfst_dirname,
-            "%s/src/extensions/far/.libs/libfstfarscript.so.17" % self.openfst_dirname,
-            "%s/src/script/.libs/libfstscript.so.17" % self.openfst_dirname,
-            "%s/src/lib/.libs/libfst.so.17" % self.openfst_dirname,
+            "%s/src/extensions/far/.libs/libfstfar.so" % self.openfst_dirname,
+            "%s/src/extensions/far/.libs/libfstfarscript.so" % self.openfst_dirname,
+            "%s/src/script/.libs/libfstscript.so" % self.openfst_dirname,
+            "%s/src/lib/.libs/libfst.so" % self.openfst_dirname,
         ]
 
     @property
