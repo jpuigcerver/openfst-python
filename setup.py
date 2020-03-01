@@ -13,7 +13,7 @@ from setuptools import setup, find_packages, Extension
 from setuptools.command.build_ext import build_ext
 
 
-OPENFST_VERSION = "1.7.3"
+OPENFST_VERSION = "1.7.6"
 
 
 def copy(src, dst):

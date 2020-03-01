@@ -10,7 +10,7 @@ OpenFst-Python exposes the official Python API to
 in the Python package, so you don't need to install it separately.
 
 The version number of OpenFst-Python is the same as the OpenFst version
-used. **The current version uses OpenFst 1.7.3.**
+used. **The current version uses OpenFst 1.7.6.**
 
 ## Build Requirements
 
