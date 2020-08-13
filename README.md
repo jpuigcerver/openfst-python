@@ -1,7 +1,7 @@
 # OpenFst-Python
 
 [![Build Status](https://travis-ci.com/jpuigcerver/openfst-python.svg?branch=master)](https://travis-ci.com/jpuigcerver/openfst-python)
-[![Python Version](https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6%2C%203.7-blue.svg)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/python-3.6%2C%203.7%2C%203.8%2C%203.9-blue.svg)](https://www.python.org/)
 [![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 OpenFst-Python exposes the official Python API to
@@ -22,6 +22,7 @@ Essentially, you will need:
 - [PatchELF](https://nixos.org/patchelf.html).
 - [Zlib development](https://zlib.net/).
 - [Python Requests](http://docs.python-requests.org).
+- [Cython](https://cython.org/).
 
 ## Installation
 

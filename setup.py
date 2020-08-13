@@ -164,7 +164,7 @@ class OpenFstBuildExt(build_ext):
                 "--enable-special",
             ]
             subprocess.check_call(configure_cmd)
-            subprocess.check_call(["make", "-j4"])
+            subprocess.check_call(["make", "-j8"])
             os.chdir(old_dir)
 
     def openfst_copy_libraries(self, ext):
@@ -197,8 +197,9 @@ class OpenFstBuildExt(build_ext):
 
         def patchelf_replace_all(so_filename, so_map):
             for oldso in patchelf_needed(so_filename):
-                if oldso in so_map:
-                    newso = so_map[oldso]
+                oldso_noversion = re.sub(r"^(.*\.so)\.[0-9]+$", r"\1", oldso)
+                if oldso_noversion in so_map:
+                    newso = so_map[oldso_noversion]
                     patchelf_replace(so_filename, oldso, newso)
 
         def patchelf_remove_libpython(so_filename):
@@ -250,12 +251,11 @@ setup(
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
         "Intended Audience :: Science/Research",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Scientific/Engineering",
         "Topic :: Software Development",
         "Topic :: Software Development :: Libraries",
