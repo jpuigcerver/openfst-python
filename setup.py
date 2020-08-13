@@ -11,9 +11,10 @@ import sys
 from distutils.command.build import build
 from setuptools import setup, find_packages, Extension
 from setuptools.command.build_ext import build_ext
+from Cython.Build import cythonize
 
 
-OPENFST_VERSION = "1.7.6"
+OPENFST_VERSION = "1.7.9"
 
 
 def copy(src, dst):
@@ -145,7 +146,6 @@ class OpenFstBuildExt(build_ext):
 
     def openfst_configure_and_make(self):
         if not os.path.exists(self.openfst_main_lib):
-            copy("ac_python_devel.m4", "%s/m4" % self.openfst_dirname)
             old_dir = os.getcwd()
             os.chdir(self.openfst_dirname)
             if os.path.exists("Makefile"):
@@ -261,6 +261,6 @@ setup(
         "Topic :: Software Development :: Libraries",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    setup_requires=["requests"],
+    setup_requires=["Cython", "requests"],
     zip_safe=False,
 )

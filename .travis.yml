@@ -1,4 +1,4 @@
-dist: xenial
+dist: bionic
 sudo: true
 
 language: python
@@ -6,30 +6,17 @@ language: python
 os:
   - linux
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-5
-      - g++-5
-
 python:
-  - 2.7
-  - 3.5
   - 3.6
   - 3.7
   - 3.8
-
-env:
-  global:
-    - CC=gcc-5 CXX=g++-5
+  - 3.9
 
 before_install:
   - sudo apt-get install -y zlib1g-dev
   - sudo apt-get install -y patchelf
   - python -m pip install -U pip
-  - python -m pip install --progress-bar off requests
+  - python -m pip install --progress-bar off requests Cython
 
 before_script:
   - python setup.py install
