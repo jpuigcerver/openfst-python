@@ -36,10 +36,9 @@ for py in cp27-cp27mu cp35-cp35m cp36-cp36m cp37-cp37m; do
   export PYTHON=/opt/python/$py/bin/python;
   echo "=== Installing dependencies for $py ===";
   $PYTHON -m pip install -U pip;
-  $PYTHON -m pip install -U requests wheel setuptools;
+  $PYTHON -m pip install -U wheel setuptools build;
   echo "=== Building for $py ==="
-  $PYTHON setup.py clean;
-  $PYTHON setup.py bdist_wheel;
+  $PYTHON -m build --wheel;
   echo "=== Installing for $py ===";
   cd /tmp;
   $PYTHON -m pip uninstall -y openfst_python;
