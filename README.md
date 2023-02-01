@@ -19,6 +19,7 @@ webpage, so you need an Internet connection and all OpenFst dependencies.
 Essentially, you will need:
 
 - A C++ compiler supporting C++11 (tested with GCC 4.9).
+- [Automake](https://www.gnu.org/software/automake/)
 - [PatchELF](https://nixos.org/patchelf.html).
 - [Zlib development](https://zlib.net/).
 - [Python Requests](http://docs.python-requests.org).
@@ -36,7 +37,7 @@ pip install openfst-python
 Alternatively, if you are installing from sources, you can simply do:
 
 ```bash
-python setup.py install
+pip install .
 ```
 
 Notice that this downloads the appropriate version of OpenFst directly from
