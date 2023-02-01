@@ -38,6 +38,7 @@ for py in cp27-cp27mu cp35-cp35m cp36-cp36m cp37-cp37m; do
   $PYTHON -m pip install -U pip;
   $PYTHON -m pip install -U wheel setuptools build;
   echo "=== Building for $py ==="
+  rm -rf build dist *.egg-info
   $PYTHON -m build --wheel;
   echo "=== Installing for $py ===";
   cd /tmp;
